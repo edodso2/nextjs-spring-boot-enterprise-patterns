@@ -1,6 +1,9 @@
 import { User } from './types';
 
-export default function UserTable({ users }: { users: User[] }) {
+export default async function UserTable() {
+  const response = await fetch('http://localhost:8080/api/users');
+  const users: User[] = await response.json();
+
   return (
     <div className="overflow-x-auto bg-white dark:bg-gray-800 rounded-lg shadow">
       <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
