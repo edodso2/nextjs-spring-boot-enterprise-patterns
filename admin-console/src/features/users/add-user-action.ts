@@ -1,6 +1,7 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
+import { usersServiceUrl } from '@/config';
 
 export async function addUserAction(formData: {
   firstName: string;
@@ -8,7 +9,7 @@ export async function addUserAction(formData: {
   email: string;
 }) {
   try {
-    const response = await fetch('http://localhost:8080/api/users', {
+    const response = await fetch(`${usersServiceUrl}/api/users`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

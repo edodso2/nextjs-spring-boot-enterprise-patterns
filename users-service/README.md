@@ -23,12 +23,26 @@ I recommend using [SDKMAN!](https://sdkman.io/) to manage Java installations:
    cd ./users-service
    ```
 
-2. Run the application:
+2. Start the database from the repository root:
+
+   ```bash
+   docker compose up -d
+   ```
+
+3. Run the application:
    ```bash
    ./gradlew bootRun
    ```
 
-The application will start and be available at the default Spring Boot port (typically http://localhost:8080). Verify the app is running by opening `http://localhost:8080/api/health-check`. You should see `OK` on the screen.
+The application will start at http://localhost:8080 and apply any pending Flyway migrations. Verify it is running by opening `http://localhost:8080/actuator/health`. You should see `{"status":"UP"}`.
+
+### Run the Tests
+
+The tests start a throwaway Postgres container with Testcontainers, so Docker must be running:
+
+```bash
+./gradlew test
+```
 
 ## Developer Experience
 

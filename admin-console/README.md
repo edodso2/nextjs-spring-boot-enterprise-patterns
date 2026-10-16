@@ -6,7 +6,7 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Prerequisites
 
-Node.js >= 18
+Node.js >= 22
 
 ## Getting Started
 
@@ -15,6 +15,8 @@ Install dependencies
 ```bash
 npm install
 ```
+
+Optionally copy `.env.example` to `.env.local` to point at a different users service (defaults to `http://localhost:8080`).
 
 Run the development server:
 
