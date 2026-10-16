@@ -1,7 +1,8 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
-import './globals.css';
 import Link from 'next/link';
+import { SWRProvider } from '@/global/swr-provider';
+import './globals.css';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -48,12 +49,20 @@ export default function RootLayout({
               >
                 Users
               </Link>
+              <Link
+                href="/notes"
+                className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 hover:underline transition-colors duration-200"
+              >
+                Notes
+              </Link>
             </nav>
           </div>
         </header>
 
         {/* Main Content */}
-        <main className="mx-auto max-w-3xl p-6">{children}</main>
+        <SWRProvider>
+          <main className="mx-auto max-w-3xl p-6">{children}</main>
+        </SWRProvider>
       </body>
     </html>
   );

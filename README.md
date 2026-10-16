@@ -12,6 +12,10 @@ Each branch of this repository will focus on a specific enterprise pattern such 
 
 The `next-api-response-caching` branch covers modern caching in Next.js using the `use cache` hook. The backend api in `users-service` allows us to confirm the cache is working and visually see the backend service is not being called. Checkout the repo to learn more.
 
+### Building Auto-Save UIs with SWR Optimistic Updates in Next.js
+
+The `nextjs-auto-save-ui-swr` branch explors how we can use SWR optimistic updates to create an auto save feature that allows users to modify any data without save buttons.
+
 ### Building a Complete SDK Pipeline: Spring Boot OpenAPI to Next.js TypeScript
 
 Coming Soon!

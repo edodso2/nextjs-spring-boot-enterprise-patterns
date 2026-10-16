@@ -30,6 +30,14 @@ public class UserController {
     public ResponseEntity<List<User>> getUsers() {
         log.info("Getting all users");
         List<User> users = userService.getUsers();
+        
+        // try {
+        //     Thread.sleep(10000); // Sleep for 10 seconds (10000 milliseconds)
+        // } catch (InterruptedException e) {
+        //     Thread.currentThread().interrupt(); // Restore interrupted status
+        //     log.warn("Thread was interrupted during sleep", e);
+        // }
+
         return ResponseEntity.ok(users);
     }
 
