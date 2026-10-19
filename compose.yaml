@@ -1,6 +1,6 @@
 name: next-spring-enterprise
 
-# Dev mode:        docker compose up -d                      (infrastructure only)
+# Dev mode:        docker compose up -d                      (infrastructure and fakes only)
 # Full-stack mode: docker compose --profile app up --build   (everything in containers)
 
 services:
@@ -21,6 +21,19 @@ services:
       timeout: 3s
       retries: 10
 
+  # Fake third-party email provider. Like users-db it runs in dev mode too, because
+  # users-service depends on it but you don't develop it alongside your app code.
+  email-service:
+    build: ./email-service
+    ports:
+      - "8081:8081"
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8081/actuator/health/readiness"]
+      interval: 5s
+      timeout: 3s
+      start_period: 30s
+      retries: 10
+
   users-service:
     profiles: [app]
     build: ./users-service
@@ -28,6 +41,7 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://users-db:5432/users
       SPRING_DATASOURCE_USERNAME: users
       SPRING_DATASOURCE_PASSWORD: users
+      EMAIL_SERVICE_URL: http://email-service:8081
     ports:
       - "8080:8080"
     depends_on:
