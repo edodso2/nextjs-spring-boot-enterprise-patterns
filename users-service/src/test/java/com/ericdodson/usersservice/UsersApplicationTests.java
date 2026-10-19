@@ -11,6 +11,7 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
+import com.ericdodson.usersservice.user.CreateUserRequest;
 import com.ericdodson.usersservice.user.User;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -28,15 +29,22 @@ class UsersApplicationTests {
 
 	@Test
 	void createsUserAndRejectsDuplicateEmail() {
-		User user = new User(null, "test.user@example.com", "Test", "User", null, null);
+		CreateUserRequest request = new CreateUserRequest("test.user@example.com", "Test", "User");
 
-		ResponseEntity<User> created = restTemplate.postForEntity("/api/users", user, User.class);
+		ResponseEntity<User> created = restTemplate.postForEntity("/api/users", request, User.class);
 		assertThat(created.getStatusCode()).isEqualTo(HttpStatus.CREATED);
 		assertThat(created.getBody().getId()).isNotNull();
 		assertThat(created.getBody().getCreatedAt()).isNotNull();
 
-		ResponseEntity<String> duplicate = restTemplate.postForEntity("/api/users", user, String.class);
+		ResponseEntity<String> duplicate = restTemplate.postForEntity("/api/users", request, String.class);
 		assertThat(duplicate.getStatusCode()).isEqualTo(HttpStatus.CONFLICT);
+		assertThat(duplicate.getBody()).contains("Email already exists");
+	}
+
+	@Test
+	void returnsNotFoundForUnknownUser() {
+		ResponseEntity<String> response = restTemplate.getForEntity("/api/users/999999", String.class);
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
 	}
 
 	@Test

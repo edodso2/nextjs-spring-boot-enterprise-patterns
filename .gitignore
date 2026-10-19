@@ -1,1 +1,5 @@
 .DS_STORE
+
+# Gradle output for every service
+**/build/
+**/.gradle/

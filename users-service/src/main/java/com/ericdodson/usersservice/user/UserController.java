@@ -20,9 +20,9 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody User user) {
-        log.info("Creating user with email: {}", user.getEmail());
-        User created = userService.createUser(user);
+    public ResponseEntity<User> createUser(@RequestBody CreateUserRequest request) {
+        log.info("Creating user with email: {}", request.email());
+        User created = userService.createUser(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 

@@ -26,4 +26,12 @@ public class User {
     @LastModifiedDate
     private Instant updatedAt;
 
+    public static User from(CreateUserRequest request) {
+        var user = new User();
+        user.email = request.email();
+        user.firstName = request.firstName();
+        user.lastName = request.lastName();
+        return user;
+    }
+
 }
